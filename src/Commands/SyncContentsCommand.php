@@ -4,7 +4,6 @@ namespace Digia\Lumen\ContentfulSync\Commands;
 
 use Contentful\Delivery\Query;
 use Digia\JsonHelpers\JsonEncoder;
-use Nord\Lumen\Contentful\HandlesContentful;
 
 /**
  * Class SyncContentsCommand
@@ -12,8 +11,6 @@ use Nord\Lumen\Contentful\HandlesContentful;
  */
 class SyncContentsCommand extends AbstractSyncCommand
 {
-
-    use HandlesContentful;
 
     /**
      * @var string
