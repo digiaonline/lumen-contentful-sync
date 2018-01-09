@@ -2,12 +2,10 @@
 
 namespace Digia\Lumen\ContentfulSync\Services;
 
-use Digia\Lumen\ContentfulSync\Jobs\ContentfulArchiveEntryJob;
 use Digia\Lumen\ContentfulSync\Jobs\ContentfulDeleteAssetJob;
 use Digia\Lumen\ContentfulSync\Jobs\ContentfulDeleteEntryJob;
 use Digia\Lumen\ContentfulSync\Jobs\ContentfulPublishAssetJob;
 use Digia\Lumen\ContentfulSync\Jobs\ContentfulPublishEntryJob;
-use Digia\Lumen\ContentfulSync\Jobs\ContentfulUnarchiveEntryJob;
 use Illuminate\Contracts\Queue\Queue;
 use Nord\Lumen\Contentful\HandlesContentful;
 
@@ -92,28 +90,6 @@ abstract class AbstractContentfulSyncService
     public function deleteEntry(string $contentType, string $entryId): void
     {
         $this->queue->push(new ContentfulDeleteEntryJob($contentType, $entryId));
-    }
-
-    /**
-     * @param string $contentType
-     * @param string $entryJson
-     *
-     * @suppress PhanTypeMismatchArgument see https://github.com/laravel/framework/pull/21248
-     */
-    public function archiveEntry(string $contentType, string $entryJson): void
-    {
-        $this->queue->push(new ContentfulArchiveEntryJob($contentType, $entryJson));
-    }
-
-    /**
-     * @param string $contentType
-     * @param string $entryJson
-     *
-     * @suppress PhanTypeMismatchArgument see https://github.com/laravel/framework/pull/21248
-     */
-    public function unarchiveEntry(string $contentType, string $entryJson): void
-    {
-        $this->queue->push(new ContentfulUnarchiveEntryJob($contentType, $entryJson));
     }
 
     /**

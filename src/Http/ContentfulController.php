@@ -27,8 +27,6 @@ class ContentfulController extends Controller
     protected const TOPIC_CONTENT_MANAGEMENT_ENTRY_PUBLISH   = 'ContentManagement.Entry.publish';
     protected const TOPIC_CONTENT_MANAGEMENT_ENTRY_UNPUBLISH = 'ContentManagement.Entry.unpublish';
     protected const TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE    = 'ContentManagement.Entry.delete';
-    protected const TOPIC_CONTENT_MANAGEMENT_ENTRY_ARCHIVE   = 'ContentManagement.Entry.archive';
-    protected const TOPIC_CONTENT_MANAGEMENT_ENTRY_UNARCHIVE = 'ContentManagement.Entry.unarchive';
 
     /**
      * @param Request $request
@@ -69,20 +67,6 @@ class ContentfulController extends Controller
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
                 $this->getContentfulSyncService()->deleteEntry($contentType, $resource->getId());
-                break;
-            case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_ARCHIVE;
-                $contentType = $resource->getContentType()->getId();
-
-                $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
-
-                $this->getContentfulSyncService()->archiveEntry($contentType, $request->getContent());
-                break;
-            case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_UNARCHIVE;
-                $contentType = $resource->getContentType()->getId();
-
-                $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
-
-                $this->getContentfulSyncService()->unarchiveEntry($contentType, $request->getContent());
                 break;
             default:
                 throw new ContentfulSyncException(sprintf('Unknown topic "%s"', $contentfulTopic));
