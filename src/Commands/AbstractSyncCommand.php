@@ -3,10 +3,10 @@
 namespace Digia\Lumen\ContentfulSync\Commands;
 
 use Contentful\Delivery\Client;
-use Digia\Lumen\ContentfulSync\Traits\HandlesContentfulSync;
+use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
 use Illuminate\Console\Command;
 use Jalle19\Laravel\LostInterfaces\Console\Command as CommandInterface;
-use Nord\Lumen\Contentful\HandlesContentful;
+use Nord\Lumen\Contentful\ContentfulService;
 
 /**
  * Class AbstractSyncCommand
@@ -15,13 +15,20 @@ use Nord\Lumen\Contentful\HandlesContentful;
 abstract class AbstractSyncCommand extends Command implements CommandInterface
 {
 
-    use HandlesContentful;
-    use HandlesContentfulSync;
-
     /**
      * @var boolean
      */
     protected $ignoreExisting;
+
+    /**
+     * @var ContentfulService
+     */
+    protected $contentfulService;
+
+    /**
+     * @var AbstractContentfulSyncService
+     */
+    protected $contentfulSyncService;
 
     /**
      * @var array
@@ -31,18 +38,25 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
     /**
      * AbstractSyncCommand constructor.
      *
-     * @param array $contentTypes
+     * @param array                         $contentTypes
+     * @param ContentfulService             $contentfulService
+     * @param AbstractContentfulSyncService $contentfulSyncService
      */
-    public function __construct(array $contentTypes)
-    {
+    public function __construct(
+        array $contentTypes,
+        ContentfulService $contentfulService,
+        AbstractContentfulSyncService $contentfulSyncService
+    ) {
         parent::__construct();
-        
-        $this->contentTypes = $contentTypes;
+
+        $this->contentTypes          = $contentTypes;
+        $this->contentfulService     = $contentfulService;
+        $this->contentfulSyncService = $contentfulSyncService;
     }
 
     /**
      * @inheritdoc
-     * 
+     *
      * @throws \Throwable
      */
     public function handle()
@@ -56,6 +70,6 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
      */
     protected function getClient(): Client
     {
-        return $this->getContentfulService()->getClient();
+        return $this->contentfulService->getClient();
     }
 }

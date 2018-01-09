@@ -74,7 +74,7 @@ class SyncContentsCommand extends AbstractSyncCommand
             foreach ($entries as $entry) {
                 // Optionally catch exceptions, depending on whether errors should be ignored
                 try {
-                    $this->getContentfulSyncService()->publishEntry(
+                    $this->contentfulSyncService->publishEntry(
                         $contentType,
                         JsonEncoder::encode($entry),
                         $this->ignoreExisting

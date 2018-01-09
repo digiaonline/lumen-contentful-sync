@@ -48,7 +48,7 @@ class SyncAssetsCommand extends AbstractSyncCommand
 
             // Process the current batch
             foreach ($assets as $asset) {
-                $this->getContentfulSyncService()->publishAsset(
+                $this->contentfulSyncService->publishAsset(
                     JsonEncoder::encode($asset),
                     $this->ignoreExisting
                 );
