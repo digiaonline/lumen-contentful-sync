@@ -1,6 +1,6 @@
 <?php
 
-namespace Digia\Lumen\ContentfulSync\Http;
+namespace Digia\Lumen\ContentfulSync\Http\Controllers;
 
 use Digia\Lumen\ContentfulSync\Exceptions\ContentfulSyncException;
 use Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware;
@@ -13,9 +13,9 @@ use Nord\Lumen\Contentful\HandlesContentful;
 /**
  * Handles incoming webhooks from Contentful
  *
- * @package Digia\Lumen\ContentfulSync\Controllers
+ * @package Digia\Lumen\ContentfulSync\Http\Controllers
  */
-class ContentfulController extends Controller
+class ContentfulSyncController extends Controller
 {
 
     use HandlesContentful;
