@@ -1,0 +1,33 @@
+{
+    "name": "digiaonline/lumen-contentful-sync",
+    "description": "A framework for synchronizing content from Contentful to a Lumen API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Stenvall",
+            "email": "sam.stenvall@digia.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "jalle19/laravel-lost-interfaces": "^1.1",
+        "laravel/lumen-framework": "^5.4",
+        "nordsoftware/lumen-contentful": "^1.0",
+        "nordsoftware/lumen-newrelic": "^1.1",
+        "digiaonline/json-helpers": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Digia\\Lumen\\ContentfulSync\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digia\\Lumen\\ContentfulSync\\Tests\\": "tests/"
+        }
+    }
+}
