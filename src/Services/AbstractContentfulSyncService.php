@@ -7,7 +7,6 @@ use Digia\Lumen\ContentfulSync\Jobs\ContentfulDeleteEntryJob;
 use Digia\Lumen\ContentfulSync\Jobs\ContentfulPublishAssetJob;
 use Digia\Lumen\ContentfulSync\Jobs\ContentfulPublishEntryJob;
 use Illuminate\Contracts\Queue\Queue;
-use Nord\Lumen\Contentful\HandlesContentful;
 
 /**
  * Class AbstractContentfulSyncService
@@ -15,8 +14,6 @@ use Nord\Lumen\Contentful\HandlesContentful;
  */
 abstract class AbstractContentfulSyncService
 {
-
-    use HandlesContentful;
 
     /**
      * @var Queue
