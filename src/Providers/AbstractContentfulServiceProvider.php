@@ -4,7 +4,6 @@ namespace Digia\Lumen\ContentfulSync\Providers;
 
 use Digia\Lumen\ContentfulSync\Commands\SyncAssetsCommand;
 use Digia\Lumen\ContentfulSync\Commands\SyncContentsCommand;
-use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
 use Illuminate\Support\ServiceProvider;
 use Jalle19\Laravel\LostInterfaces\Providers\ServiceProvider as ServiceProviderInterface;
 use Laravel\Lumen\Application;
@@ -19,7 +18,7 @@ abstract class AbstractContentfulServiceProvider extends ServiceProvider impleme
     /**
      * @param Application $app
      */
-    abstract protected function registerContentfulSyncService(Application $app);
+    abstract protected function registerContentfulSyncServiceBindings(Application $app);
 
     /**
      * @inheritDoc
@@ -38,9 +37,7 @@ abstract class AbstractContentfulServiceProvider extends ServiceProvider impleme
         });
 
         // Register the service
-        app()->singleton(AbstractContentfulSyncService::class, function (Application $app) {
-            return $this->registerContentfulSyncService($app);
-        });
+        $this->registerContentfulSyncServiceBindings(app());
     }
 
     /**
