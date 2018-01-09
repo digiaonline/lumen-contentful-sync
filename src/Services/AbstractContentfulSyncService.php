@@ -37,18 +37,6 @@ abstract class AbstractContentfulSyncService
     abstract public function handleEntryDeleted(string $contentType, string $entryId);
 
     /**
-     * @param string $contentType
-     * @param string $entryJson
-     */
-    abstract public function handleEntryUnarchived(string $contentType, string $entryJson);
-
-    /**
-     * @param string $contentType
-     * @param string $entryJson
-     */
-    abstract public function handleEntryArchived(string $contentType, string $entryJson);
-
-    /**
      * @param string $assetJson
      * @param bool   $ignoreExisting
      */
