@@ -1,18 +1,10 @@
 <?php
 
 return [
+    /**
+     * The list of content type IDs (content models in Contentful)
+     */
     'content_types' => [
-        'article',
-        'brand',
-        'category',
-        'feedRecommendation',
-        'page',
-        'partner',
-        'person',
-        'theme',
-        'question',
-        'recipe',
-        'video',
-        'blog',
+        
     ],
 ];
