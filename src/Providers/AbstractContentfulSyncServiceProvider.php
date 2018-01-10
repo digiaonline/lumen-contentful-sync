@@ -5,6 +5,7 @@ namespace Digia\Lumen\ContentfulSync\Providers;
 use Digia\Lumen\ContentfulSync\Console\Commands\SyncAssetsCommand;
 use Digia\Lumen\ContentfulSync\Console\Commands\SyncContentsCommand;
 use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
+use Digia\Lumen\ContentfulSync\Http\Middleware\WebhookAuthenticationMiddleware;
 use Illuminate\Support\ServiceProvider;
 use Jalle19\Laravel\LostInterfaces\Providers\ServiceProvider as ServiceProviderInterface;
 use Laravel\Lumen\Application;
@@ -43,6 +44,14 @@ abstract class AbstractContentfulSyncServiceProvider extends ServiceProvider imp
             return new SyncContentsCommand(config('contentfulSync.content_types'),
                 $app->make(ContentfulServiceContract::class),
                 $app->make(ContentfulSyncServiceContract::class));
+        });
+
+        // Configure how middleware should be built
+        app()->bind(WebhookAuthenticationMiddleware::class, function () {
+            $expectedUsername = config('contentfulSync.webhookUsername');
+            $expectedPassword = config('contentfulSync.webhookPassword');
+
+            return new WebhookAuthenticationMiddleware($expectedUsername, $expectedPassword);
         });
     }
 
