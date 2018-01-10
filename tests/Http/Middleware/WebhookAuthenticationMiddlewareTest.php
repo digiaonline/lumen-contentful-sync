@@ -3,8 +3,8 @@
 namespace Digia\Lumen\ContentfulSync\Tests\Http\Middleware;
 
 use Digia\Lumen\ContentfulSync\Http\Middleware\WebhookAuthenticationMiddleware;
-use Illuminate\Http\Request;
 use Digia\Lumen\ContentfulSync\Tests\TestCase;
+use Illuminate\Http\Request;
 
 /**
  * Class WebhookAuthenticationTest

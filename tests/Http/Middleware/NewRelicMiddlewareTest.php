@@ -3,10 +3,10 @@
 namespace Digia\Lumen\ContentfulSync\Tests\Http\Middleware;
 
 use Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware;
+use Digia\Lumen\ContentfulSync\Tests\TestCase;
 use Illuminate\Http\Request;
 use Intouch\Newrelic\Newrelic;
 use PHPUnit\Framework\MockObject\MockObject;
-use Digia\Lumen\ContentfulSync\Tests\TestCase;
 
 /**
  * Class NewRelicMiddlewareTest
