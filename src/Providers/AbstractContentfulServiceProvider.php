@@ -2,9 +2,9 @@
 
 namespace Digia\Lumen\ContentfulSync\Providers;
 
-use Digia\Lumen\ContentfulSync\Commands\SyncAssetsCommand;
-use Digia\Lumen\ContentfulSync\Commands\SyncContentsCommand;
 use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
+use Digia\Lumen\ContentfulSync\Console\Commands\SyncAssetsCommand;
+use Digia\Lumen\ContentfulSync\Console\Commands\SyncContentsCommand;
 use Illuminate\Support\ServiceProvider;
 use Jalle19\Laravel\LostInterfaces\Providers\ServiceProvider as ServiceProviderInterface;
 use Laravel\Lumen\Application;
