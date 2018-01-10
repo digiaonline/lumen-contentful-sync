@@ -1,6 +1,6 @@
 <?php
 
-namespace Digia\Lumen\ContentfulSync\Commands;
+namespace Digia\Lumen\ContentfulSync\Console\Commands;
 
 use Contentful\Delivery\Client;
 use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;

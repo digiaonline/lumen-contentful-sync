@@ -1,6 +1,6 @@
 <?php
 
-namespace Digia\Lumen\ContentfulSync\Commands;
+namespace Digia\Lumen\ContentfulSync\Console\Commands;
 
 use Contentful\Delivery\Query;
 use Digia\JsonHelpers\JsonEncoder;
