@@ -33,6 +33,30 @@ class SyncContentsCommand extends AbstractSyncCommand
     /**
      * @inheritdoc
      */
+    protected function getQuery(?string $contentType = null): Query
+    {
+        $query = new Query();
+        $query->setSkip($this->skip);
+        $query->setContentType($contentType);
+
+        return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getTotalQuery(?string $contentType = null): Query
+    {
+        $query = new Query();
+        $query->setLimit(1);
+        $query->setContentType($contentType);
+
+        return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function handle()
     {
         parent::handle();
@@ -61,14 +85,10 @@ class SyncContentsCommand extends AbstractSyncCommand
         $numSynchronized = 0;
         $skip            = 0;
 
-        $this->output->progressStart($this->getTotal($contentType));
+        $this->output->progressStart($this->getClient()->getEntries($this->getTotalQuery($contentType))->getTotal());
 
         do {
-            // Build the query
-            $query = new Query();
-            $query->setSkip($skip);
-            $query->setContentType($contentType);
-            $entries = $this->getClient()->getEntries($query);
+            $entries = $this->getClient()->getEntries($this->getQuery($contentType));
 
             // Process the current batch
             foreach ($entries as $entry) {
@@ -100,22 +120,4 @@ class SyncContentsCommand extends AbstractSyncCommand
 
         $this->info("Done, synchronized {$numSynchronized} entries");
     }
-
-    /**
-     * @param string $contentType
-     *
-     * @return int
-     *
-     * @throws \RangeException
-     */
-    private function getTotal(string $contentType): int
-    {
-        $query = new Query();
-        $query->setLimit(1);
-        $query->setContentType($contentType);
-        $entries = $this->getClient()->getEntries($query);
-
-        return $entries->getTotal();
-    }
-
 }

@@ -28,23 +28,39 @@ class SyncAssetsCommand extends AbstractSyncCommand
     /**
      * @inheritdoc
      */
+    protected function getQuery(?string $contentType = null): Query
+    {
+        $query = new Query();
+        $query->setSkip($this->skip);
+
+        return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getTotalQuery(?string $contentType = null): Query
+    {
+        $query = new Query();
+        $query->setLimit(1);
+
+        return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function handle()
     {
         parent::handle();
 
         $this->info('Synchronizing assets/media...');
 
-        $numSynchronized = 0;
-        $skip            = 0;
-
-        $this->output->progressStart($this->getTotal());
+        $this->output->progressStart($this->getClient()->getAssets($this->getTotalQuery())->getTotal());
 
         do {
-            // Build the query
-            $query = new Query();
-            $query->setSkip($skip);
             /** @var Asset[]|ResourceArray $assets */
-            $assets = $this->getClient()->getAssets($query);
+            $assets = $this->getClient()->getAssets($this->getQuery());
 
             // Process the current batch
             foreach ($assets as $asset) {
@@ -53,32 +69,17 @@ class SyncAssetsCommand extends AbstractSyncCommand
                     $this->ignoreExisting
                 );
 
-                $numSynchronized++;
+                $this->numSynchronized++;
 
                 $this->output->progressAdvance();
             }
 
             // Move on to the next batch
-            $skip += $assets->getLimit();
-        } while ($skip < $assets->getTotal());
+            $this->skip += $assets->getLimit();
+        } while ($this->skip < $assets->getTotal());
 
         $this->output->progressFinish();
 
-        $this->info("Done, synchronized {$numSynchronized} assets");
+        $this->info("Done, synchronized {$this->numSynchronized} assets");
     }
-
-    /**
-     * @return int
-     *
-     * @throws \RangeException
-     */
-    private function getTotal(): int
-    {
-        $query = new Query();
-        $query->setLimit(1);
-        $assets = $this->getClient()->getAssets($query);
-
-        return $assets->getTotal();
-    }
-
 }
