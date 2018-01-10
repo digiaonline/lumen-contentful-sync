@@ -11,10 +11,10 @@ use Laravel\Lumen\Application;
 use Nord\Lumen\Contentful\ContentfulServiceContract;
 
 /**
- * Class ContentfulServiceProvider
+ * Class AbstractContentfulSyncServiceProvider
  * @package Digia\Lumen\ContentfulSync\Providers
  */
-abstract class AbstractContentfulServiceProvider extends ServiceProvider implements ServiceProviderInterface
+abstract class AbstractContentfulSyncServiceProvider extends ServiceProvider implements ServiceProviderInterface
 {
 
     /**
