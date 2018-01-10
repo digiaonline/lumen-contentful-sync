@@ -2,7 +2,7 @@
 
 namespace Digia\Lumen\ContentfulSync\Tests\Jobs;
 
-use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
+use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Digia\Lumen\ContentfulSync\Tests\TestCase;
 
 class ContentfulSyncJobTestCase extends TestCase
@@ -13,7 +13,7 @@ class ContentfulSyncJobTestCase extends TestCase
      */
     protected function mockSyncServiceMethod($method)
     {
-        $mock = $this->getMockBuilder(AbstractContentfulSyncService::class)
+        $mock = $this->getMockBuilder(ContentfulSyncServiceContract::class)
                      ->disableOriginalConstructor()
                      ->setMethods([$method])
                      ->getMockForAbstractClass();
@@ -22,6 +22,6 @@ class ContentfulSyncJobTestCase extends TestCase
              ->method($method);
 
         // Replace the service instance in the container with the mock.
-        $this->app->instance(AbstractContentfulSyncService::class, $mock);
+        $this->app->instance(ContentfulSyncServiceContract::class, $mock);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Digia\Lumen\ContentfulSync\Tests\Http\Controllers;
 
+use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Digia\Lumen\ContentfulSync\Http\Controllers\ContentfulSyncController;
-use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
 use Digia\Lumen\ContentfulSync\Tests\TestCase;
 use Illuminate\Http\Request;
-use Nord\Lumen\Contentful\ContentfulService;
+use Nord\Lumen\Contentful\ContentfulServiceContract;
 
 /**
  * Class ContentfulSyncControllerTest
@@ -28,22 +28,22 @@ class ContentfulSyncControllerTest extends TestCase
     }
 
     /**
-     * @return ContentfulService|\PHPUnit\Framework\MockObject\MockObject
+     * @return ContentfulServiceContract|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getMockedService()
     {
-        return $this->getMockBuilder(ContentfulService::class)
+        return $this->getMockBuilder(ContentfulServiceContract::class)
                     ->disableOriginalConstructor()
                     ->getMock();
     }
 
     /**
-     * @return AbstractContentfulSyncService|\PHPUnit\Framework\MockObject\MockObject
+     * @return ContentfulSyncServiceContract|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getMockedSyncService()
     {
-        return $this->getMockBuilder(AbstractContentfulSyncService::class)
+        return $this->getMockBuilder(ContentfulSyncServiceContract::class)
                     ->disableOriginalConstructor()
-                    ->getMockForAbstractClass();
+                    ->getMock();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Digia\Lumen\ContentfulSync\Traits;
 
-use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
+use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 
 /**
  * Trait SynchronizesContentfulEntities
@@ -12,10 +12,10 @@ trait HandlesContentfulSync
 {
 
     /**
-     * @return AbstractContentfulSyncService
+     * @return ContentfulSyncServiceContract
      */
-    public function getContentfulSyncService(): AbstractContentfulSyncService
+    public function getContentfulSyncService(): ContentfulSyncServiceContract
     {
-        return app(AbstractContentfulSyncService::class);
+        return app(ContentfulSyncServiceContract::class);
     }
 }

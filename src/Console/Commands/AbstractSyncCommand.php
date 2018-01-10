@@ -4,10 +4,10 @@ namespace Digia\Lumen\ContentfulSync\Console\Commands;
 
 use Contentful\Delivery\Client;
 use Contentful\Delivery\Query;
-use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
+use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Illuminate\Console\Command;
 use Jalle19\Laravel\LostInterfaces\Console\Command as CommandInterface;
-use Nord\Lumen\Contentful\ContentfulService;
+use Nord\Lumen\Contentful\ContentfulServiceContract;
 
 /**
  * Class AbstractSyncCommand
@@ -22,12 +22,12 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
     protected $ignoreExisting;
 
     /**
-     * @var ContentfulService
+     * @var ContentfulServiceContract
      */
     protected $contentfulService;
 
     /**
-     * @var AbstractContentfulSyncService
+     * @var ContentfulSyncServiceContract
      */
     protected $contentfulSyncService;
 
@@ -64,13 +64,13 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
      * AbstractSyncCommand constructor.
      *
      * @param array                         $contentTypes
-     * @param ContentfulService             $contentfulService
-     * @param AbstractContentfulSyncService $contentfulSyncService
+     * @param ContentfulServiceContract     $contentfulService
+     * @param ContentfulSyncServiceContract $contentfulSyncService
      */
     public function __construct(
         array $contentTypes,
-        ContentfulService $contentfulService,
-        AbstractContentfulSyncService $contentfulSyncService
+        ContentfulServiceContract $contentfulService,
+        ContentfulSyncServiceContract $contentfulSyncService
     ) {
         parent::__construct();
 

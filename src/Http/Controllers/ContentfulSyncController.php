@@ -2,13 +2,13 @@
 
 namespace Digia\Lumen\ContentfulSync\Http\Controllers;
 
+use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Digia\Lumen\ContentfulSync\Exceptions\ContentfulSyncException;
 use Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware;
-use Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller;
-use Nord\Lumen\Contentful\ContentfulService;
+use Nord\Lumen\Contentful\ContentfulServiceContract;
 
 /**
  * Handles incoming webhooks from Contentful
@@ -26,24 +26,24 @@ class ContentfulSyncController extends Controller
     protected const TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE    = 'ContentManagement.Entry.delete';
 
     /**
-     * @var ContentfulService
+     * @var ContentfulServiceContract
      */
     private $contentfulService;
 
     /**
-     * @var AbstractContentfulSyncService
+     * @var ContentfulSyncServiceContract
      */
     private $contentfulSyncService;
 
     /**
      * ContentfulSyncController constructor.
      *
-     * @param ContentfulService             $contentfulService
-     * @param AbstractContentfulSyncService $contentfulSyncService
+     * @param ContentfulServiceContract     $contentfulService
+     * @param ContentfulSyncServiceContract $contentfulSyncService
      */
     public function __construct(
-        ContentfulService $contentfulService,
-        AbstractContentfulSyncService $contentfulSyncService
+        ContentfulServiceContract $contentfulService,
+        ContentfulSyncServiceContract $contentfulSyncService
     ) {
         $this->contentfulService     = $contentfulService;
         $this->contentfulSyncService = $contentfulSyncService;
