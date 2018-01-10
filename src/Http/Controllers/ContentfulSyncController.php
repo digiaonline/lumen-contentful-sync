@@ -58,8 +58,10 @@ class ContentfulSyncController extends Controller
      */
     public function handleIncomingWebhook(Request $request): Response
     {
+        $requestContent = (string)$request->getContent();
+
         // Parse the payload into a Contentful SDK resource object
-        $resource = $this->contentfulService->getClient()->reviveJson($request->getContent());
+        $resource = $this->contentfulService->getClient()->reviveJson($requestContent);
 
         // Instrument the request so the middleware can do its job
         $contentfulTopic = $this->getContentfulTopic($request);
@@ -68,7 +70,7 @@ class ContentfulSyncController extends Controller
         // Handle different topics differently
         switch ($contentfulTopic) {
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_PUBLISH:
-                $this->contentfulSyncService->publishAsset($request->getContent());
+                $this->contentfulSyncService->publishAsset($requestContent);
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_DELETE:
@@ -79,7 +81,7 @@ class ContentfulSyncController extends Controller
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
-                $this->contentfulSyncService->publishEntry($contentType, $request->getContent());
+                $this->contentfulSyncService->publishEntry($contentType, $requestContent);
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE:
