@@ -3,6 +3,7 @@
     "description": "A framework for synchronizing content from Contentful to a Lumen API",
     "type": "library",
     "license": "MIT",
+    "keywords": ["lumen", "contentful", "sync", "synchronization"],
     "authors": [
         {
             "name": "Sam Stenvall",
