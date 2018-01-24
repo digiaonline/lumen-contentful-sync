@@ -58,7 +58,13 @@ protected function registerContentfulSyncServiceBindings(Application $app)
 }
 ```
 
-5. Register the console commands in your kernel:
+5. Register the service provider you just implemented:
+
+```php
+$app->register(\Your\ServiceProvider::class);
+```
+
+6. Register the console commands in your kernel:
 
 ```php
 protected $commands = [
@@ -68,7 +74,7 @@ protected $commands = [
 ];
 ```
 
-6. If you intend to use webhooks you will have to configure a route to the controller. In this example we will use 
+7. If you intend to use webhooks you will have to configure a route to the controller. In this example we will use 
 both the New Relic and the webhook authentication middlewares, but both are optional:
 
 ```php
@@ -82,7 +88,7 @@ $app->post('/contentful/handleIncomingWebhook', [
 ]);
 ```
 
-7. If you use the webhook authentication middleware you can configure the username and password to expect by adding 
+8. If you use the webhook authentication middleware you can configure the username and password to expect by adding 
 these to your `.env` file:
 
 ```
