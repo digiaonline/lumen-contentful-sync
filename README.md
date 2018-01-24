@@ -151,6 +151,16 @@ Synchronizing content of type "article"...
 Done, synchronized 300 entries
 ```
 
+### New Relic middleware
+
+If you use New Relic to monitor your application you will probably notice that all Contentful webhooks are lumped 
+together as a single transacation (since they all use the same URL/route).
+
+However, if you apply the 
+`Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware` middleware to your route, transactions will be named 
+`topic@contentType`, e.g. `ContentManagement.Entry.publish@article`. This allows you to single in on particularly slow 
+webhooks.
+
 ### Asynchronous processing
 
 In your service provider implementation you can specify an instance of `Illuminate\Contracts\Queue\Queue` to inject 
