@@ -82,9 +82,6 @@ class SyncContentsCommand extends AbstractSyncCommand
     {
         $this->info('Synchronizing content of type "' . $contentType . '"...');
 
-        $numSynchronized = 0;
-        $skip            = 0;
-
         $this->output->progressStart($this->getClient()->getEntries($this->getTotalQuery($contentType))->getTotal());
 
         do {
@@ -100,7 +97,7 @@ class SyncContentsCommand extends AbstractSyncCommand
                         $this->ignoreExisting
                     );
 
-                    $numSynchronized++;
+                    $this->numSynchronized++;
 
                     $this->output->progressAdvance();
                 } catch (\Throwable $e) {
@@ -113,11 +110,11 @@ class SyncContentsCommand extends AbstractSyncCommand
             }
 
             // Move on to the next batch
-            $skip += $entries->getLimit();
-        } while ($skip < $entries->getTotal());
+            $this->skip += $entries->getLimit();
+        } while ($this->skip < $entries->getTotal());
 
         $this->output->progressFinish();
 
-        $this->info("Done, synchronized {$numSynchronized} entries");
+        $this->info("Done, synchronized {$this->numSynchronized} entries");
     }
 }
