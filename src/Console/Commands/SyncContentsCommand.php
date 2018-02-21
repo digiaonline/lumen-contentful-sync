@@ -28,7 +28,7 @@ class SyncContentsCommand extends AbstractSyncCommand
     /**
      * @var boolean
      */
-    private $ignoreErrors;
+    protected $ignoreErrors;
 
     /**
      * @inheritdoc
@@ -81,7 +81,7 @@ class SyncContentsCommand extends AbstractSyncCommand
      *
      * @throws \Throwable
      */
-    private function synchronizeContentType(string $contentType)
+    protected function synchronizeContentType(string $contentType)
     {
         $this->info('Synchronizing content of type "' . $contentType . '"...');
 
