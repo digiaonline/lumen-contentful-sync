@@ -28,7 +28,7 @@ class SyncContentsCommand extends AbstractSyncCommand
     /**
      * @var boolean
      */
-    private $ignoreErrors;
+    protected $ignoreErrors;
 
     /**
      * @inheritdoc
@@ -69,6 +69,9 @@ class SyncContentsCommand extends AbstractSyncCommand
         $contentTypes = $contentType !== null ? [$contentType] : $this->contentTypes;
 
         foreach ($contentTypes as $contentType) {
+            // Reset counters before each content type
+            $this->resetCounters();
+
             $this->synchronizeContentType($contentType);
         }
     }
@@ -78,7 +81,7 @@ class SyncContentsCommand extends AbstractSyncCommand
      *
      * @throws \Throwable
      */
-    private function synchronizeContentType(string $contentType)
+    protected function synchronizeContentType(string $contentType)
     {
         $this->info('Synchronizing content of type "' . $contentType . '"...');
 
