@@ -69,6 +69,9 @@ class SyncContentsCommand extends AbstractSyncCommand
         $contentTypes = $contentType !== null ? [$contentType] : $this->contentTypes;
 
         foreach ($contentTypes as $contentType) {
+            // Reset counters before each content type
+            $this->resetCounters();
+
             $this->synchronizeContentType($contentType);
         }
     }

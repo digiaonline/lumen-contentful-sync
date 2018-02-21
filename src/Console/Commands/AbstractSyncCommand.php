@@ -86,10 +86,10 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
      */
     public function handle()
     {
-        // Parse options and set defaults
-        $this->ignoreExisting  = (bool)$this->option('ignoreExisting');
-        $this->numSynchronized = 0;
-        $this->skip            = 0;
+        // Parse options and reset counters
+        $this->ignoreExisting = (bool)$this->option('ignoreExisting');
+
+        $this->resetCounters();
     }
 
     /**
@@ -98,5 +98,14 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
     protected function getClient(): Client
     {
         return $this->contentfulService->getClient();
+    }
+
+    /**
+     * Resets the "skip" and "numSynchronized" counters
+     */
+    protected function resetCounters(): void
+    {
+        $this->numSynchronized = 0;
+        $this->skip            = 0;
     }
 }
