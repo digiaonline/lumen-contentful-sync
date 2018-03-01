@@ -39,17 +39,6 @@ class SyncAssetsCommand extends AbstractSyncCommand
     /**
      * @inheritdoc
      */
-    protected function getTotalQuery(?string $contentType = null): Query
-    {
-        $query = new Query();
-        $query->setLimit(1);
-
-        return $query;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function handle()
     {
         parent::handle();

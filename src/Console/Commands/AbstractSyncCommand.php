@@ -58,7 +58,13 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
      *
      * @return Query the query used to get the total number of items
      */
-    abstract protected function getTotalQuery(?string $contentType = null): Query;
+    protected function getTotalQuery(?string $contentType = null): Query
+    {
+        $query = clone $this->getQuery($contentType);
+
+        return $query->setSkip(0)
+                     ->setLimit(1);
+    }
 
     /**
      * AbstractSyncCommand constructor.
