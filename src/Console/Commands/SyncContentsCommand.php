@@ -16,7 +16,7 @@ class SyncContentsCommand extends AbstractSyncCommand
      * @var string
      */
     protected $signature = 'contentful:contents:sync 
-                            {contentType?* : The content types, e.g. "article" or "brand". You can specify multiple content types. Omit to synchronize all content types.} 
+                            {contentTypes?* : The content types, e.g. "article" or "brand". You can specify multiple content types. Omit to synchronize all content types.} 
                             {--ignoreErrors : Whether to ignore errors when synchronizing, useful to get around circular references.}
                             {--ignoreExisting : Whether to ignore existing entries, i.e. only synchronize new entries.}';
 
@@ -51,7 +51,7 @@ class SyncContentsCommand extends AbstractSyncCommand
 
         // Parse options and arguments
         $this->ignoreErrors = (bool)$this->option('ignoreErrors');
-        $contentTypes       = $this->argument('contentType');
+        $contentTypes       = $this->argument('contentTypes');
 
         // Synchronize all content types in a particular order unless specific content types were specified
         $contentTypes = empty($contentTypes) ? $this->contentTypes : $contentTypes;
