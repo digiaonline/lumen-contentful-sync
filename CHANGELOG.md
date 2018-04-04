@@ -1,5 +1,10 @@
 # Change log
 
+## 1.1.0
+
+* add support for synchronizing multiple specific content types at once
+* run static analysis using phpstan
+
 ## 1.0.3
 
 * provide a default getTotalQuery() implementation, removes one abstract method
