@@ -30,5 +30,10 @@
         "psr-4": {
             "Digia\\Lumen\\ContentfulSync\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ]
     }
 }

@@ -11,6 +11,6 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - vendor/bin/phpunit
+  - composer test
 after_script:
   - php php-coveralls.phar -v
