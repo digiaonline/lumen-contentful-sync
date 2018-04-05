@@ -1,5 +1,9 @@
 # Change log
 
+## 1.2.0
+
+* add support for specifying the batch size in console commands (default is still 100)
+
 ## 1.1.0
 
 * add support for synchronizing multiple specific content types at once
