@@ -16,7 +16,8 @@ class SyncContentsCommand extends AbstractSyncCommand
      * @var string
      */
     protected $signature = 'contentful:contents:sync 
-                            {contentTypes?* : The content types, e.g. "article" or "brand". You can specify multiple content types. Omit to synchronize all content types.} 
+                            {contentTypes?* : The content types, e.g. "article" or "brand". You can specify multiple content types. Omit to synchronize all content types.}
+                            {--batchSize=100 : The number of items to request from Contentful in one batch. Defaults to 100.} 
                             {--ignoreErrors : Whether to ignore errors when synchronizing, useful to get around circular references.}
                             {--ignoreExisting : Whether to ignore existing entries, i.e. only synchronize new entries.}';
 
@@ -37,6 +38,7 @@ class SyncContentsCommand extends AbstractSyncCommand
     {
         $query = new Query();
         $query->setSkip($this->skip);
+        $query->setLimit($this->batchSize);
         $query->setContentType($contentType);
 
         return $query;

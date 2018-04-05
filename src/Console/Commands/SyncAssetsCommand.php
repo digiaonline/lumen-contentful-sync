@@ -18,7 +18,8 @@ class SyncAssetsCommand extends AbstractSyncCommand
      * @var string
      */
     protected $signature = 'contentful:assets:sync
-                            {--ignoreExisting : Whether to ignore existing entries, i.e. only synchronize new entries.}';
+                            {--ignoreExisting : Whether to ignore existing entries, i.e. only synchronize new entries.}
+                            {--batchSize=100 : The number of items to request from Contentful in one batch. Defaults to 100.}';
 
     /**
      * @var string
@@ -32,6 +33,7 @@ class SyncAssetsCommand extends AbstractSyncCommand
     {
         $query = new Query();
         $query->setSkip($this->skip);
+        $query->setLimit($this->batchSize);
 
         return $query;
     }
