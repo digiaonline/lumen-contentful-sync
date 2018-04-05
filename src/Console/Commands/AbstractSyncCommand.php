@@ -47,6 +47,11 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
     protected $skip;
 
     /**
+     * @var int
+     */
+    protected $batchSize;
+
+    /**
      * @param null|string $contentType the content type, or null if not applicable
      *
      * @return Query the query used to fetch all entries/assets
@@ -93,6 +98,7 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
     public function handle()
     {
         // Parse options and reset counters
+        $this->batchSize      = (int)$this->option('batchSize');
         $this->ignoreExisting = (bool)$this->option('ignoreExisting');
 
         $this->resetCounters();
