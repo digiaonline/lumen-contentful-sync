@@ -2,9 +2,7 @@
 
 namespace Digia\Lumen\ContentfulSync\Console\Commands;
 
-use Contentful\Delivery\Asset;
 use Contentful\Delivery\Query;
-use Contentful\ResourceArray;
 use Digia\JsonHelpers\JsonEncoder;
 
 /**
@@ -50,7 +48,6 @@ class SyncAssetsCommand extends AbstractSyncCommand
         $this->output->progressStart($this->getClient()->getAssets($this->getTotalQuery())->getTotal());
 
         do {
-            /** @var Asset[]|ResourceArray $assets */
             $assets = $this->getClient()->getAssets($this->getQuery());
 
             // Process the current batch
