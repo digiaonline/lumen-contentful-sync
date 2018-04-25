@@ -31,7 +31,7 @@ class NewRelicMiddleware extends BaseNewRelicMiddleware
             return "{$topic}@{$contentType}";
         }
 
-        return "{$topic}";
+        return $topic;
     }
 
 }

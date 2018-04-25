@@ -42,10 +42,8 @@ class WebhookAuthenticationMiddleware
      */
     public function handle(Request $request, \Closure $next)
     {
-        if ($request->hasHeader('Authorization')) {
-            if ($request->header('Authorization') === $this->getExpectedAuthorizationLine()) {
-                return $next($request);
-            }
+        if ($request->hasHeader('Authorization') && $request->header('Authorization') === $this->getExpectedAuthorizationLine()) {
+            return $next($request);
         }
 
         throw new \InvalidArgumentException('Invalid webhook authentication');
