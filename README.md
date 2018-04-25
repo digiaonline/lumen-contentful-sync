@@ -21,6 +21,10 @@ synchronize content from Contentful to your application.
 * a middleware for proper New Relic transaction name instrumentation for webhook requests
 * asynchronous processing support by using jobs
 
+### Requirements
+
+* PHP >= 7.1
+
 ## Installation
 
 1. Start by adding the library as a dependency to your application:
