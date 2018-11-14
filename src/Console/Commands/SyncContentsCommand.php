@@ -71,7 +71,7 @@ class SyncContentsCommand extends AbstractSyncCommand
      *
      * @throws \Throwable
      */
-    protected function synchronizeContentType(string $contentType)
+    protected function synchronizeContentType(string $contentType): void
     {
         $this->info('Synchronizing content of type "' . $contentType . '"...');
 

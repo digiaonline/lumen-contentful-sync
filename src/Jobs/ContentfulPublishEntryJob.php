@@ -41,7 +41,7 @@ final class ContentfulPublishEntryJob extends ContentfulSyncJob
     /**
      * @inheritdoc
      */
-    public function handle()
+    public function handle(): void
     {
         $this->getContentfulSyncService()
              ->handleEntryPublished($this->contentType, $this->entryJson, $this->ignoreExisting);

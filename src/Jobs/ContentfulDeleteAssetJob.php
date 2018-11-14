@@ -27,7 +27,7 @@ final class ContentfulDeleteAssetJob extends ContentfulSyncJob
     /**
      * @inheritdoc
      */
-    public function handle()
+    public function handle(): void
     {
         $this->getContentfulSyncService()->handleAssetDeleted($this->assetId);
     }
