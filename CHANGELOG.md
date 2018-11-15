@@ -1,5 +1,10 @@
 # Change log
 
+## 2.0.0
+
+* fix some code analysis issues
+* use v2.x of the Contentful SDK
+
 ## 1.2.0
 
 * add support for specifying the batch size in console commands (default is still 100)
