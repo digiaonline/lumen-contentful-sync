@@ -56,7 +56,9 @@ class SyncContentsCommand extends AbstractSyncCommand
         $contentTypes       = $this->argument('contentTypes');
 
         // Synchronize all content types in a particular order unless specific content types were specified
-        $contentTypes = empty($contentTypes) ? $this->contentTypes : $contentTypes;
+        if (!\is_array($contentTypes) || empty($contentTypes)) {
+            $contentTypes = $this->contentTypes;
+        }
 
         foreach ($contentTypes as $contentType) {
             // Reset counters before each content type
