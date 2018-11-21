@@ -2,7 +2,7 @@
 
 namespace Digia\Lumen\ContentfulSync\Console\Commands;
 
-use Contentful\Delivery\Client;
+use Contentful\Delivery\Client\ClientInterface;
 use Contentful\Delivery\Query;
 use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Illuminate\Console\Command;
@@ -105,9 +105,9 @@ abstract class AbstractSyncCommand extends Command implements CommandInterface
     }
 
     /**
-     * @return Client
+     * @return ClientInterface
      */
-    protected function getClient(): Client
+    protected function getClient(): ClientInterface
     {
         return $this->contentfulService->getClient();
     }

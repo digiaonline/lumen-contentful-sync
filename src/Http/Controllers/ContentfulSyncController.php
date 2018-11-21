@@ -3,7 +3,8 @@
 namespace Digia\Lumen\ContentfulSync\Http\Controllers;
 
 use Contentful\Core\Resource\ResourceInterface;
-use Contentful\Delivery\SystemProperties;
+use Contentful\Delivery\Client;
+use Contentful\Delivery\Resource\Entry;
 use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Digia\Lumen\ContentfulSync\Exceptions\ContentfulSyncException;
 use Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware;
@@ -64,7 +65,9 @@ class ContentfulSyncController extends Controller
         $requestContent = (string)$request->getContent();
 
         // Parse the payload into a Contentful SDK resource object
-        $resource = $this->contentfulService->getClient()->parseJson($requestContent);
+        /** @var Client $client */
+        $client   = $this->contentfulService->getClient();
+        $resource = $client->parseJson($requestContent);
 
         // Instrument the request so the middleware can do its job
         $contentfulTopic = $this->getContentfulTopic($request);
@@ -80,7 +83,8 @@ class ContentfulSyncController extends Controller
                 $this->contentfulSyncService->deleteAsset($this->getResourceId($resource));
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_PUBLISH:
-                $contentType = $this->getResourceContentType($resource);
+                /** @var Entry $resource */
+                $contentType = $this->getEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
@@ -88,7 +92,8 @@ class ContentfulSyncController extends Controller
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE:
-                $contentType = $this->getResourceContentType($resource);
+                /** @var Entry $resource */
+                $contentType = $this->getEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
@@ -102,23 +107,13 @@ class ContentfulSyncController extends Controller
     }
 
     /**
-     * @param ResourceInterface $resource
+     * @param Entry $entry
      *
      * @return string
-     *
-     * @throws \InvalidArgumentException
      */
-    private function getResourceContentType(ResourceInterface $resource): string
+    private function getEntryContentType(Entry $entry): string
     {
-        /** @var SystemProperties $systemProperties */
-        $systemProperties = $resource->getSystemProperties();
-        $contentType      = $systemProperties->getContentType();
-
-        if ($contentType === null) {
-            throw new \InvalidArgumentException('Resource does not have a content type');
-        }
-
-        return $contentType->getId();
+        return $entry->getSystemProperties()->getContentType()->getId();
     }
 
     /**
