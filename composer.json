@@ -35,7 +35,7 @@
     "scripts": {
         "test": [
             "phpunit",
-            "phpstan analyze -l 1 src/ tests/"
+            "phpstan analyze -l 1 src/"
         ]
     }
 }
