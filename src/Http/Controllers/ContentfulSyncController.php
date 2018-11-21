@@ -2,6 +2,7 @@
 
 namespace Digia\Lumen\ContentfulSync\Http\Controllers;
 
+use Contentful\Core\Resource\ResourceArray;
 use Contentful\Core\Resource\ResourceInterface;
 use Contentful\Delivery\Client;
 use Contentful\Delivery\Resource\Entry;
@@ -64,11 +65,6 @@ class ContentfulSyncController extends Controller
     {
         $requestContent = (string)$request->getContent();
 
-        // Parse the payload into a Contentful SDK resource object
-        /** @var Client $client */
-        $client   = $this->contentfulService->getClient();
-        $resource = $client->parseJson($requestContent);
-
         // Instrument the request so the middleware can do its job
         $contentfulTopic = $this->getContentfulTopic($request);
         $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_TOPIC, $contentfulTopic);
@@ -80,10 +76,12 @@ class ContentfulSyncController extends Controller
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_DELETE:
+                $resource = $this->parseRequestContent($requestContent);
                 $this->contentfulSyncService->deleteAsset($this->getResourceId($resource));
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_PUBLISH:
                 /** @var Entry $resource */
+                $resource    = $this->parseRequestContent($requestContent);
                 $contentType = $this->getEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
@@ -93,6 +91,7 @@ class ContentfulSyncController extends Controller
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE:
                 /** @var Entry $resource */
+                $resource    = $this->parseRequestContent($requestContent);
                 $contentType = $this->getEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
@@ -104,6 +103,21 @@ class ContentfulSyncController extends Controller
         }
 
         return new Response();
+    }
+
+    /**
+     * Parse the specified request content into a Contentful SDK resource
+     *
+     * @param string $resourceContent
+     *
+     * @return ResourceInterface|ResourceArray
+     */
+    private function parseRequestContent(string $resourceContent)
+    {
+        /** @var Client $client */
+        $client = $this->contentfulService->getClient();
+
+        return $client->parseJson($resourceContent);
     }
 
     /**
