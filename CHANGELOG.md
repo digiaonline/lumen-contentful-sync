@@ -1,5 +1,9 @@
 # Change log
 
+## 4.0.0
+
+* use v4.x of the Contentful SDK
+
 ## 2.0.0
 
 * fix some code analysis issues
