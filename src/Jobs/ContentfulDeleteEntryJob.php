@@ -34,7 +34,7 @@ final class ContentfulDeleteEntryJob extends ContentfulSyncJob
     /**
      * @inheritdoc
      */
-    public function handle()
+    public function handle(): void
     {
         $this->getContentfulSyncService()->handleEntryDeleted($this->contentType, $this->entryId);
     }

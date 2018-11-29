@@ -2,8 +2,10 @@
 
 namespace Digia\Lumen\ContentfulSync\Http\Controllers;
 
+use Contentful\Core\Resource\ResourceArray;
 use Contentful\Core\Resource\ResourceInterface;
-use Contentful\Delivery\SystemProperties;
+use Contentful\Delivery\Client;
+use Contentful\Delivery\Resource\Entry;
 use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Digia\Lumen\ContentfulSync\Exceptions\ContentfulSyncException;
 use Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware;
@@ -63,9 +65,6 @@ class ContentfulSyncController extends Controller
     {
         $requestContent = (string)$request->getContent();
 
-        // Parse the payload into a Contentful SDK resource object
-        $resource = $this->contentfulService->getClient()->parseJson($requestContent);
-
         // Instrument the request so the middleware can do its job
         $contentfulTopic = $this->getContentfulTopic($request);
         $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_TOPIC, $contentfulTopic);
@@ -77,10 +76,13 @@ class ContentfulSyncController extends Controller
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ASSET_DELETE:
+                $resource = $this->parseRequestContent($requestContent);
                 $this->contentfulSyncService->deleteAsset($this->getResourceId($resource));
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_PUBLISH:
-                $contentType = $this->getResourceContentType($resource);
+                /** @var Entry $resource */
+                $resource    = $this->parseRequestContent($requestContent);
+                $contentType = $this->getEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
@@ -88,7 +90,9 @@ class ContentfulSyncController extends Controller
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE:
-                $contentType = $this->getResourceContentType($resource);
+                /** @var Entry $resource */
+                $resource    = $this->parseRequestContent($requestContent);
+                $contentType = $this->getEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
@@ -102,23 +106,28 @@ class ContentfulSyncController extends Controller
     }
 
     /**
-     * @param ResourceInterface $resource
+     * Parse the specified request content into a Contentful SDK resource
+     *
+     * @param string $resourceContent
+     *
+     * @return ResourceInterface|ResourceArray
+     */
+    private function parseRequestContent(string $resourceContent)
+    {
+        /** @var Client $client */
+        $client = $this->contentfulService->getClient();
+
+        return $client->parseJson($resourceContent);
+    }
+
+    /**
+     * @param Entry $entry
      *
      * @return string
-     *
-     * @throws \InvalidArgumentException
      */
-    private function getResourceContentType(ResourceInterface $resource): string
+    private function getEntryContentType(Entry $entry): string
     {
-        /** @var SystemProperties $systemProperties */
-        $systemProperties = $resource->getSystemProperties();
-        $contentType      = $systemProperties->getContentType();
-
-        if ($contentType === null) {
-            throw new \InvalidArgumentException('Resource does not have a content type');
-        }
-
-        return $contentType->getId();
+        return $entry->getSystemProperties()->getContentType()->getId();
     }
 
     /**

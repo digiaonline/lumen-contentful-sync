@@ -34,7 +34,7 @@ final class ContentfulPublishAssetJob extends ContentfulSyncJob
     /**
      * @inheritdoc
      */
-    public function handle()
+    public function handle(): void
     {
         $this->getContentfulSyncService()->handleAssetPublished($this->assetJson, $this->ignoreExisting);
     }

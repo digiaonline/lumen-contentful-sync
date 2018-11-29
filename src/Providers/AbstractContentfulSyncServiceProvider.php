@@ -26,7 +26,7 @@ abstract class AbstractContentfulSyncServiceProvider extends ServiceProvider imp
     /**
      * @inheritDoc
      */
-    public function register()
+    public function register(): void
     {
         app()->configure('contentfulSync');
 
@@ -58,7 +58,7 @@ abstract class AbstractContentfulSyncServiceProvider extends ServiceProvider imp
     /**
      * @inheritDoc
      */
-    public function boot()
+    public function boot(): void
     {
     }
 }
