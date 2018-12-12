@@ -1,5 +1,9 @@
 # Change log
 
+## 1.2.1
+
+* relax the version constraint for the nordsoftware/lumen-newrelic dependency
+
 ## 1.2.0
 
 * add support for specifying the batch size in console commands (default is still 100)
