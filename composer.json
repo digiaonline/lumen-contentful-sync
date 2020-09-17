@@ -13,7 +13,7 @@
     "require": {
         "php": ">=7.1",
         "jalle19/laravel-lost-interfaces": "^1.1",
-        "laravel/lumen-framework": "^5.4",
+        "laravel/lumen-framework": "^5.4|^6.0",
         "nordsoftware/lumen-contentful": "^1.1",
         "nordsoftware/lumen-newrelic": "^1.1 || ^2.0",
         "digiaonline/json-helpers": "^1.0"
