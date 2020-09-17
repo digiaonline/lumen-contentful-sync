@@ -15,7 +15,7 @@
         "jalle19/laravel-lost-interfaces": "^1.2",
         "laravel/lumen-framework": "^5.4|^6.0",
         "nordsoftware/lumen-contentful": "^4.2",
-        "nordsoftware/lumen-newrelic": "^2.0.2",
+        "nordsoftware/lumen-newrelic": "^2.0",
         "digiaonline/json-helpers": "^1.0"
     },
     "require-dev": {
