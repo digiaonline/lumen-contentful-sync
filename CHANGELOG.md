@@ -1,5 +1,9 @@
 # Change log
 
+## 4.1.0
+
+* relax version constraints enough to work on Lumen 6.x
+
 ## 4.0.0
 
 * use v4.x of the Contentful SDK
