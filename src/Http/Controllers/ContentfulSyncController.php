@@ -6,6 +6,7 @@ use Contentful\Core\Resource\ResourceArray;
 use Contentful\Core\Resource\ResourceInterface;
 use Contentful\Delivery\Client;
 use Contentful\Delivery\Resource\Entry;
+use Contentful\Delivery\Resource\DeletedEntry;
 use Digia\Lumen\ContentfulSync\Contracts\ContentfulSyncServiceContract;
 use Digia\Lumen\ContentfulSync\Exceptions\ContentfulSyncException;
 use Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware;
@@ -92,7 +93,7 @@ class ContentfulSyncController extends Controller
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE:
                 /** @var Entry $resource */
                 $resource    = $this->parseRequestContent($requestContent);
-                $contentType = $this->getEntryContentType($resource);
+                $contentType = $this->getDeletedEntryContentType($resource);
 
                 $request->attributes->set(NewRelicMiddleware::ATTRIBUTE_CONTENT_TYPE, $contentType);
 
@@ -128,6 +129,16 @@ class ContentfulSyncController extends Controller
     private function getEntryContentType(Entry $entry): string
     {
         return $entry->getSystemProperties()->getContentType()->getId();
+    }
+
+    /**
+     * @param DeletedEntry $deletedEntry
+     *
+     * @return string
+     */
+    private function getDeletedEntryContentType(DeletedEntry $deletedEntry): string
+    {
+        return $deletedEntry->getSystemProperties()->getContentType()->getId();
     }
 
     /**
