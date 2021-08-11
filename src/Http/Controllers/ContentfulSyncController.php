@@ -91,7 +91,7 @@ class ContentfulSyncController extends Controller
                 break;
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_UNPUBLISH:
             case self::TOPIC_CONTENT_MANAGEMENT_ENTRY_DELETE:
-                /** @var Entry $resource */
+                /** @var DeletedEntry $resource */
                 $resource    = $this->parseRequestContent($requestContent);
                 $contentType = $this->getDeletedEntryContentType($resource);
 
