@@ -1,6 +1,6 @@
 # lumen-contentful-sync
 
-[![Build Status](https://travis-ci.org/digiaonline/lumen-contentful-sync.svg?branch=master)](https://travis-ci.org/digiaonline/lumen-contentful-sync)
+[![Test](https://github.com/digiaonline/lumen-contentful-sync/actions/workflows/test.yml/badge.svg)](https://github.com/digiaonline/lumen-contentful-sync/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/digiaonline/lumen-contentful-sync/badge.svg?branch=master)](https://coveralls.io/github/digiaonline/lumen-contentful-sync?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/digiaonline/lumen-contentful-sync/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/digiaonline/lumen-contentful-sync/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/digiaonline/lumen-contentful-sync/v/stable)](https://packagist.org/packages/digiaonline/lumen-contentful-sync)
@@ -9,8 +9,8 @@
 
 ## Introduction
 
-This library provides a powerful abstraction on top of 
-[digiaonline/lumen-contentful](https://github.com/digiaonline/lumen-contentful) with the goal of making it easier to 
+This library provides a powerful abstraction on top of
+[digiaonline/lumen-contentful](https://github.com/digiaonline/lumen-contentful) with the goal of making it easier to
 synchronize content from Contentful to your application.
 
 ### Features
@@ -33,7 +33,7 @@ synchronize content from Contentful to your application.
 composer require digiaonline/lumen-contentful-sync
 ```
 
-2. Copy `config/contentfulSync.php` to your configuration directory. There is only one mandatory configuration key - 
+2. Copy `config/contentfulSync.php` to your configuration directory. There is only one mandatory configuration key -
 `content_types`. This array should contain a list of all the content model IDs you have in your Contentful space, e.g.:
 
 ```php
@@ -49,16 +49,16 @@ return [
 ];
 ```
 
-3. Extend `Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService` and implement the necessary methods. This 
+3. Extend `Digia\Lumen\ContentfulSync\Services\AbstractContentfulSyncService` and implement the necessary methods. This
 is where the logic for how to handle entries and assets will live. See the next section for more details.
 
-4. Extend `Digia\Lumen\ContentfulSync\Providers\AbstractContentfulSyncServiceProvider` and implement the 
+4. Extend `Digia\Lumen\ContentfulSync\Providers\AbstractContentfulSyncServiceProvider` and implement the
 `registerContentfulSyncServiceBindings` method. A typical implementation would look like this:
 
 ```php
 protected function registerContentfulSyncServiceBindings(Application $app)
 {
-    // ContentfulSyncService is the concrete implementation we made in step 3 
+    // ContentfulSyncService is the concrete implementation we made in step 3
     $app->singleton(ContentfulSyncServiceContract::class, function (Application $app) {
         return new ContentfulSyncService($app->make(Queue::class));
     });
@@ -81,7 +81,7 @@ protected $commands = [
 ];
 ```
 
-7. If you intend to use webhooks you will have to configure a route to the controller. In this example we will use 
+7. If you intend to use webhooks you will have to configure a route to the controller. In this example we will use
 both the New Relic and the webhook authentication middlewares, but both are optional:
 
 ```php
@@ -95,7 +95,7 @@ $app->post('/contentful/handleIncomingWebhook', [
 ]);
 ```
 
-8. If you use the webhook authentication middleware you can configure the username and password to expect by adding 
+8. If you use the webhook authentication middleware you can configure the username and password to expect by adding
 these to your `.env` file:
 
 ```
@@ -109,7 +109,7 @@ If you need more complicated logic you will have to create your own middleware.
 
 Since all applications are different it is up to you to define how to handle your entries and assets.
 
-The unimplemented methods give you the asset/entry in question as JSON. You will most likely want to use the SDK to 
+The unimplemented methods give you the asset/entry in question as JSON. You will most likely want to use the SDK to
 convert these blobs to actual objects:
 
 ```php
@@ -120,7 +120,7 @@ public function handleEntryPublished(string $contentType, string $entryJson, boo
 {
     // We're assuming here that you have injected an instance of ContentfulServiceContract
     $entry = $this->contentfulService->getClient()->reviveJson($entryJson);
-    
+
     // You can now do e.g. $entry->getTitle(); etc. depending on your content model
 }
 ```
@@ -160,18 +160,18 @@ Done, synchronized 300 entries
 
 ### New Relic middleware
 
-If you use New Relic to monitor your application you will probably notice that all Contentful webhooks are lumped 
+If you use New Relic to monitor your application you will probably notice that all Contentful webhooks are lumped
 together as a single transacation (since they all use the same URL/route).
 
-However, if you apply the 
-`Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware` middleware to your route, transactions will be named 
-`topic@contentType`, e.g. `ContentManagement.Entry.publish@article`. This allows you to single in on particularly slow 
+However, if you apply the
+`Digia\Lumen\ContentfulSync\Http\Middleware\NewRelicMiddleware` middleware to your route, transactions will be named
+`topic@contentType`, e.g. `ContentManagement.Entry.publish@article`. This allows you to single in on particularly slow
 webhooks.
 
 ### Asynchronous processing
 
-In your service provider implementation you can specify an instance of `Illuminate\Contracts\Queue\Queue` to inject 
-into the service. Unless you've configured a different queue specifically your application will be using the 
+In your service provider implementation you can specify an instance of `Illuminate\Contracts\Queue\Queue` to inject
+into the service. Unless you've configured a different queue specifically your application will be using the
 `SyncQueue` implementation to simulate a completely synchronous queue.
 
 By specifying a different queue instance you can offload all the work the service does to queue workers.
