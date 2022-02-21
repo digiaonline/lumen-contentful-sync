@@ -1,5 +1,9 @@
 # Change log
 
+## 4.2.0
+
+* use proper "DeletedEntry" type to handle unpublish webhook call
+
 ## 4.1.0
 
 * relax version constraints enough to work on Lumen 6.x
