@@ -1,8 +1,8 @@
 # lumen-contentful-sync
 
 [![Test](https://github.com/digiaonline/lumen-contentful-sync/actions/workflows/test.yml/badge.svg)](https://github.com/digiaonline/lumen-contentful-sync/actions/workflows/test.yml)
-[![Coverage Status](https://coveralls.io/repos/github/digiaonline/lumen-contentful-sync/badge.svg?branch=master)](https://coveralls.io/github/digiaonline/lumen-contentful-sync?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/digiaonline/lumen-contentful-sync/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/digiaonline/lumen-contentful-sync/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/digiaonline/lumen-contentful-sync/badge.svg?branch=main)](https://coveralls.io/github/digiaonline/lumen-contentful-sync?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/digiaonline/lumen-contentful-sync/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/digiaonline/lumen-contentful-sync/?branch=main)
 [![Latest Stable Version](https://poser.pugx.org/digiaonline/lumen-contentful-sync/v/stable)](https://packagist.org/packages/digiaonline/lumen-contentful-sync)
 [![Total Downloads](https://poser.pugx.org/digiaonline/lumen-contentful-sync/downloads)](https://packagist.org/packages/digiaonline/lumen-contentful-sync)
 [![License](https://poser.pugx.org/digiaonline/lumen-contentful-sync/license)](https://packagist.org/packages/digiaonline/lumen-contentful-sync)
